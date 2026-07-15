@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Caffeinated Dad LLC</title>
 <meta name="description" content="Caffeinated Dad LLC — an indie software studio building privacy-first apps, starting with CryptoBeam.">
+<link rel="icon" type="image/png" href="assets/cryptobeam-icon.png">
 <style>
   :root {
     --bg: #0e0e12;
@@ -109,9 +110,10 @@
   }
   .app-icon {
     width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem;
+    overflow: hidden;
+  }
+  .app-icon img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
   }
   .app-card h3 { margin: 0 0 6px; font-size: 1.15rem; }
   .app-card p { margin: 0 0 10px; color: var(--muted); font-size: 0.98rem; }
@@ -188,7 +190,7 @@
     <p>Our first release is CryptoBeam — with more on the way.</p>
 
     <div class="app-card">
-      <div class="app-icon">₿</div>
+      <div class="app-icon"><img src="assets/cryptobeam-icon.png" alt="CryptoBeam app icon"></div>
       <div>
         <h3>CryptoBeam</h3>
         <p>A read-only crypto portfolio tracker for macOS and iOS. Connect your exchanges and wallets to see everything in one place — CryptoBeam never executes trades, moves funds, or holds custody of your assets.</p>
