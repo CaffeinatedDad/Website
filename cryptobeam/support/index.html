@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoBeam Support · Caffeinated Dad</title>
+  <meta name="description" content="Support and troubleshooting guidance for CryptoBeam on macOS, iOS, and iPadOS.">
+  <link rel="canonical" href="https://caffeinateddad.dev/cryptobeam/support/">
+  <link rel="icon" type="image/png" href="../../assets/cryptobeam-icon.png">
+  <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../../">
+        <span class="brand-dot" aria-hidden="true"></span>
+        Caffeinated Dad
+      </a>
+      <nav class="page-nav" aria-label="CryptoBeam pages">
+        <a href="../../">Home</a>
+        <a href="./" aria-current="page">Support</a>
+        <a href="../privacy/">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <header class="page-intro">
+      <div class="product-lockup">
+        <img src="../../assets/cryptobeam-icon.png" alt="CryptoBeam app icon" width="58" height="58">
+        <div>
+          <p class="eyebrow">CryptoBeam</p>
+          <h1>Support</h1>
+        </div>
+      </div>
+      <p class="lede">CryptoBeam is a read-only cryptocurrency portfolio tracker for Apple devices. If something is not working as expected, the guidance below can help you troubleshoot or contact support.</p>
+      <ul class="platforms" aria-label="Supported platforms">
+        <li>macOS</li>
+        <li>iOS</li>
+        <li>iPadOS</li>
+      </ul>
+    </header>
+
+    <section class="content-section" aria-labelledby="contact-support">
+      <div class="card">
+        <h2 id="contact-support">Contact</h2>
+        <p>Email CryptoBeam support at:</p>
+        <p><a class="email-link" href="mailto:support@caffeinateddad.dev">support@caffeinateddad.dev</a></p>
+        <p>To help diagnose an issue, include your platform, CryptoBeam version and build, the affected provider or wallet source, and the exact error wording you see.</p>
+        <aside class="safety-note" aria-label="Credential safety warning">
+          <strong>Protect your credentials.</strong>
+          <p>CryptoBeam support will never ask for your wallet seed phrase or private keys. Never email seed phrases, private keys, or API secrets. Do not send an API secret unless a separately approved secure support process specifically requires it.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="troubleshooting">
+      <h2 id="troubleshooting">Common troubleshooting</h2>
+      <ol>
+        <li>Verify that your device has a working internet connection.</li>
+        <li>Refresh the portfolio and allow the refresh to finish.</li>
+        <li>Open Settings and confirm that the affected provider credentials are present and current.</li>
+        <li>For an exchange connection, confirm that its API key has read-only balance permissions.</li>
+        <li>Quit and reopen CryptoBeam, then try the refresh again.</li>
+        <li>Use <strong>Reset This Device</strong> only if you intend to clear this installation's local settings, cached portfolio presentation, downloaded logos, and local-only credentials. It preserves synchronized credentials and wallets, local price history, and the macOS app-owned wallet backup.</li>
+      </ol>
+      <p>If the problem continues, contact support with the details listed above. Do not use <strong>Erase Synced &amp; Local Data</strong> as a routine troubleshooting step.</p>
+    </section>
+
+    <section class="content-section" aria-labelledby="provider-access">
+      <h2 id="provider-access">Provider access</h2>
+      <div class="card">
+        <ul>
+          <li><strong>Kraken:</strong> enable only read/query access needed to view balances, including Query Funds. Never enable withdrawal access for CryptoBeam.</li>
+          <li><strong>Coinbase:</strong> use view/read-only access.</li>
+          <li><strong>All exchanges:</strong> CryptoBeam does not need Trade, Transfer, or Withdraw permissions.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="version-build">
+      <h2 id="version-build">Version and build</h2>
+      <p>Open CryptoBeam Settings and look in the About section for the version and build number. Include the complete value shown there when contacting support.</p>
+    </section>
+
+    <section class="content-section" aria-labelledby="privacy">
+      <h2 id="privacy">Privacy</h2>
+      <p>CryptoBeam has no analytics, ads, or tracking. For complete details about local storage, iCloud synchronization, provider requests, and deletion controls, read the <a href="../privacy/">CryptoBeam Privacy Policy</a>.</p>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <div class="wrap">
+      <p>Caffeinated Dad LLC · Lincoln, Nebraska</p>
+      <p><a href="../privacy/">Privacy Policy</a> · <a href="../../">caffeinateddad.dev</a></p>
+    </div>
+  </footer>
+</body>
+</html>
