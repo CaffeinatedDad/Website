@@ -1,247 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Caffeinated Dad LLC</title>
-<meta name="description" content="Caffeinated Dad LLC — an indie software studio building privacy-first apps, starting with CryptoBeam.">
-<link rel="icon" type="image/png" href="assets/cryptobeam-icon.png">
-<style>
-  :root {
-    --bg: #0e0e12;
-    --card: #16161d;
-    --text: #e6e6ea;
-    --muted: #9a9aa6;
-    --accent: #a855f7;
-    --accent2: #ec4899;
-    --border: #26262f;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
-
-  /* ---------- NAV ---------- */
-  nav {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 24px 0;
-  }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; }
-  .brand-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    box-shadow: 0 0 12px rgba(168,85,247,0.6);
-  }
-  nav a {
-    color: var(--muted); text-decoration: none; font-size: 0.92rem; margin-left: 28px;
-    transition: color 0.2s ease;
-  }
-  nav a:hover, nav a:focus-visible { color: var(--text); }
-
-  /* ---------- HERO ---------- */
-  header.hero {
-    padding: 80px 0 64px;
-    text-align: center;
-  }
-  .eyebrow {
-    display: inline-block;
-    color: var(--accent);
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 18px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 6px 16px;
-  }
-  h1 {
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
-    line-height: 1.1;
-    margin: 0 0 20px;
-    letter-spacing: -0.02em;
-  }
-  h1 .accent-text {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .hero p.lede {
-    font-size: 1.15rem;
-    color: var(--muted);
-    max-width: 560px;
-    margin: 0 auto;
-  }
-  .cursor {
-    display: inline-block;
-    width: 3px; height: 1em;
-    background: var(--accent);
-    margin-left: 4px;
-    vertical-align: text-bottom;
-    animation: blink 1.1s steps(1) infinite;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
-  @media (prefers-reduced-motion: reduce) {
-    .cursor { animation: none; }
-  }
-
-  /* ---------- SECTION SHARED ---------- */
-  section { padding: 56px 0; border-top: 1px solid var(--border); }
-  .section-label {
-    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
-  }
-  h2 { font-size: 1.6rem; margin: 0 0 16px; }
-  section p { color: var(--muted); max-width: 640px; }
-
-  /* ---------- APP CARD ---------- */
-  .app-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 28px; margin-top: 24px;
-    display: flex; gap: 20px; align-items: flex-start;
-  }
-  .app-icon {
-    width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
-    overflow: hidden;
-  }
-  .app-icon img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-  }
-  .app-card h3 { margin: 0 0 6px; font-size: 1.15rem; }
-  .app-card p { margin: 0 0 10px; color: var(--muted); font-size: 0.98rem; }
-  .status-pill {
-    display: inline-block; font-size: 0.78rem; font-weight: 600;
-    color: var(--accent); background: rgba(168,85,247,0.12);
-    border: 1px solid rgba(168,85,247,0.3);
-    padding: 3px 12px; border-radius: 999px;
-  }
-
-  /* ---------- PRINCIPLES ---------- */
-  .principles { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
-  @media (max-width: 620px) { .principles { grid-template-columns: 1fr; } }
-  .principle {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 14px; padding: 20px 22px;
-  }
-  .principle h4 {
-    margin: 0 0 8px; font-size: 1rem;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .principle p { margin: 0; font-size: 0.92rem; color: var(--muted); }
-
-  /* ---------- CONTACT ---------- */
-  .contact-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 32px; margin-top: 24px;
-    text-align: center;
-  }
-  .contact-card a.email {
-    display: inline-block; margin-top: 14px;
-    color: var(--bg); background: var(--text);
-    font-weight: 600; text-decoration: none;
-    padding: 12px 26px; border-radius: 999px;
-    transition: transform 0.15s ease, opacity 0.15s ease;
-  }
-  .contact-card a.email:hover, .contact-card a.email:focus-visible {
-    transform: translateY(-1px); opacity: 0.92;
-  }
-
-  footer {
-    padding: 32px 0 48px; text-align: center;
-    color: var(--muted); font-size: 0.85rem;
-  }
-  footer a { color: var(--muted); }
-  .pill {
-    display: inline-block; background: #20202a; color: var(--muted);
-    border: 1px solid var(--border); border-radius: 999px;
-    padding: 4px 12px; font-size: 0.8rem; margin-top: 14px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>Caffeinated Dad — Independent software, seriously.</title>
+  <meta name="description" content="Come for the jokes. Stay for the code. Caffeinated Dad is an independent software brand and the maker of CryptoBeam for Mac, iPhone, and iPad.">
+  <link rel="canonical" href="https://caffeinateddad.dev/">
+  <link rel="icon" type="image/png" href="/assets/launch/favicon.png">
+  <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-<div class="wrap">
-
-  <nav>
-    <div class="brand"><span class="brand-dot"></span> Caffeinated Dad</div>
-    <div>
-      <a href="#work">Work</a>
-      <a href="#approach">Approach</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
-
-  <header class="hero">
-    <span class="eyebrow">Caffeinated Dad LLC</span>
-    <h1>Software built after<br><span class="accent-text">bedtime</span><span class="cursor" aria-hidden="true"></span></h1>
-    <p class="lede">An independent software studio. We build focused apps that do one job well and stay out of your business — literally.</p>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="brand" href="/" aria-label="Caffeinated Dad home"><img src="/assets/launch/brand.webp" alt="Caffeinated Dad" width="1500" height="233"></a>
+    <nav aria-label="Main navigation"><a href="/cryptobeam/">CryptoBeam</a><a href="#approach">The approach</a><a href="#contact">Say hello</a></nav>
   </header>
-
-  <section id="work">
-    <div class="section-label">What we build</div>
-    <h2>Apps, not data-collection schemes</h2>
-    <p>Our first release is CryptoBeam — with more on the way.</p>
-
-    <div class="app-card">
-      <div class="app-icon"><img src="assets/cryptobeam-icon.png" alt="CryptoBeam app icon"></div>
-      <div>
-        <h3>CryptoBeam</h3>
-        <p>A read-only crypto portfolio tracker for macOS and iOS. Connect your exchanges and wallets to see everything in one place — CryptoBeam never executes trades, moves funds, or holds custody of your assets.</p>
-        <span class="status-pill">In development</span>
+  <main id="main">
+    <section class="brand-hero wrap" aria-labelledby="brand-title">
+      <p class="eyebrow">Independent software. A little personality.</p>
+      <h1 id="brand-title">Come for the jokes.<br><span class="gradient-text">Stay for the code.</span></h1>
+      <p class="lede">Thoughtful apps, built after bedtime.<br>Made by an independent developer with a serious coffee habit.</p>
+      <a class="text-link" href="#work">Meet the software <span aria-hidden="true">↘</span></a>
+    </section>
+    <section class="wrap home-work" id="work" aria-labelledby="work-title">
+      <div class="section-heading"><p class="eyebrow">From the desk of Caffeinated Dad</p><h2 id="work-title">Small studio. Real software.</h2></div>
+      <article class="featured-product">
+        <div class="product-art"><img src="/assets/launch/cryptobeam-wordmark.webp" alt="CryptoBeam" width="1600" height="353" loading="lazy"></div>
+        <div class="featured-copy"><p class="eyebrow">Available now</p><h3>Meet CryptoBeam.</h3><p>A private view of your crypto portfolio, at home on Mac, iPhone, and iPad.</p><a class="button" href="/cryptobeam/">Explore CryptoBeam <span aria-hidden="true">↗</span></a></div>
+      </article>
+    </section>
+    <section class="wrap approach" id="approach" aria-labelledby="approach-title">
+      <div class="section-heading"><p class="eyebrow">The approach</p><h2 id="approach-title">Take the software seriously.<br>Keep the rest human.</h2></div>
+      <div class="principles">
+        <article><span class="number" aria-hidden="true">01</span><h3>Useful by design.</h3><p>Focused software that earns its place in your day. Clear purpose, thoughtful details.</p></article>
+        <article><span class="number" aria-hidden="true">02</span><h3>Independent, on purpose.</h3><p>Built by the person who cares about the small things. Including the email you send when something feels off.</p></article>
+        <article><span class="number" aria-hidden="true">03</span><h3>Powered by caffeine.</h3><p>A lot of care. A lot of coffee. An occasional dad joke that probably should have stayed in the drafts.</p></article>
       </div>
-    </div>
-  </section>
-
-  <section id="approach">
-    <div class="section-label">How we operate</div>
-    <h2>Built with a few hard rules</h2>
-    <div class="principles">
-      <div class="principle">
-        <h4>🔒 No servers, no snooping</h4>
-        <p>Our apps run on your device. We don't operate servers that collect your data, because we'd rather not have it.</p>
-      </div>
-      <div class="principle">
-        <h4>📵 No tracking, no ads</h4>
-        <p>No analytics pipelines, no ad networks, no behavioral profiles. What you do in the app stays in the app.</p>
-      </div>
-      <div class="principle">
-        <h4>🧢 Independent, on purpose</h4>
-        <p>Small studio, no outside investors telling us to monetize your attention. We build what we'd want to use.</p>
-      </div>
-      <div class="principle">
-        <h4>☕ Powered by caffeine</h4>
-        <p>And the occasional dad joke. We take the software seriously. We don't take ourselves too seriously.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="section-label">Get in touch</div>
-    <h2>Questions, bugs, or just saying hi</h2>
-    <div class="contact-card">
-      <p>Reach us directly — a real person (with a real cup of coffee) reads every message.</p>
-      <a class="email" href="mailto:support@caffeinateddad.dev">support@caffeinateddad.dev</a>
-    </div>
-  </section>
-
-  <footer>
-    <p>Caffeinated Dad LLC · Lincoln, Nebraska</p>
-    <p>
-      CryptoBeam:
-      <a href="cryptobeam/privacy/">Privacy</a>
-      ·
-      <a href="cryptobeam/support/">Support</a>
-    </p>
-    <div class="pill">Independent software studio · No servers · No tracking</div>
+    </section>
+    <section class="wrap contact" id="contact" aria-labelledby="contact-title"><p class="eyebrow">A real person on the other end</p><h2 id="contact-title">Questions? Ideas? A better dad joke?</h2><a class="text-link email" href="mailto:support@caffeinateddad.dev">support@caffeinateddad.dev <span aria-hidden="true">↗</span></a></section>
+  </main>
+  <footer class="site-footer wrap">
+    <div><p class="footer-name">Caffeinated Dad LLC</p><p>Independent software · Built with ridiculous amounts of coffee.</p></div>
+    <nav aria-label="Product links"><a href="/cryptobeam/">CryptoBeam</a><a href="/cryptobeam/privacy/">Privacy</a><a href="/cryptobeam/support/">Support</a></nav>
+    <nav aria-label="Social links"><a href="https://x.com/CaffDadDev">X</a><a href="https://www.facebook.com/profile.php?id=61594080151848">Facebook</a><a href="https://www.instagram.com/caffdaddev/">Instagram</a></nav>
   </footer>
-
-</div>
 </body>
 </html>
