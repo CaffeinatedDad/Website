@@ -1,0 +1,15 @@
+# The repo root is the assets directory, so anything not listed here becomes public.
+.git
+.github
+.wrangler
+.claude
+.DS_Store
+.assetsignore
+.gitignore
+wrangler.jsonc
+CNAME
+node_modules
+package.json
+package-lock.json
+.dev.vars*
+.env*
