@@ -1,0 +1,7 @@
+# GitHub Pages (Jekyll) build settings. They only keep files off the site.
+# A custom exclude list replaces GitHub Pages' default one, which hides CNAME, so CNAME is listed too.
+exclude:
+  - CNAME
+  - PROJECT.md
+  - CLAUDE.md
+  - docs

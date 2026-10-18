@@ -13,3 +13,7 @@ package.json
 package-lock.json
 .dev.vars*
 .env*
+_config.yml
+PROJECT.md
+CLAUDE.md
+docs
