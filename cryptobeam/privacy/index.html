@@ -34,7 +34,7 @@
             <h1>Privacy Policy</h1>
           </div>
         </div>
-        <p class="updated"><strong>Last updated:</strong> August 16, 2026</p>
+        <p class="updated"><strong>Last updated:</strong> October 13, 2026</p>
         <p class="lede">CryptoBeam is a cryptocurrency portfolio tracker for macOS, iOS, and iPadOS. This policy explains what data the app handles, where it lives, and what we can and cannot see. The short version: <strong>your financial data is handled by the app on your devices, by the providers you configure, and in your personal iCloud where synchronization is used. The developer has no CryptoBeam backend, no analytics, and no access to your data.</strong></p>
       </header>
 
@@ -64,10 +64,11 @@
         <p>CryptoBeam communicates directly from your device to third-party services <strong>that you choose to configure</strong>, in order to show you your own portfolio. Specifically:</p>
         <ul>
           <li><strong>Cryptocurrency exchanges</strong> you connect (e.g., Kraken, Coinbase) — to retrieve your account balances using the read-only API keys you provide.</li>
-          <li><strong>Blockchain data providers</strong> (e.g., Helius for Solana, Alchemy for Ethereum, and public blockchain APIs for Bitcoin, XRP, Stellar, Dogecoin, TON, and Tron) — to read balances for the public addresses you add.</li>
+          <li><strong>Blockchain data providers</strong> (e.g., Helius for Solana; Alchemy for Ethereum, Base, Arbitrum One, OP Mainnet, Polygon, Monad, Robinhood Chain, and HyperEVM; and public blockchain APIs for Bitcoin, XRP, Stellar, Dogecoin, TON, and Tron) — to read balances for the public addresses you add and, for native Solana stake accounts, their staking rewards.</li>
           <li><strong>Pricing providers</strong> (e.g., CoinGecko and GeckoTerminal) — to retrieve current market prices and token information.</li>
         </ul>
         <p>These requests go directly from your device to those providers. The developer is not a party to and cannot see these communications. Each of these providers has its own privacy policy and terms, which govern their handling of any request data. We encourage you to review the policies of any service you connect.</p>
+        <p>To show token logos and collectible images, the app downloads each image directly from the web address that the blockchain data and pricing providers above return for it. That address may belong to the provider or to another host, such as a token's or collection's own website, a content delivery network, or an IPFS gateway. That host receives an ordinary web request for the image from your device and, as with any web request, can see your IP address. The developer is not a party to and cannot see these downloads.</p>
       </section>
 
       <section class="content-section" aria-labelledby="icloud-sync">
@@ -82,8 +83,8 @@
         <ul>
           <li><strong>API keys and other credentials</strong> are stored using Apple Keychain. They remain device-local unless you choose the credential synchronization option offered for that service.</li>
           <li><strong>Public wallet configuration</strong> is stored through iCloud Key-Value Storage and is also available to the app locally through Apple's synchronization system.</li>
-          <li><strong>Settings, accepted portfolio presentation, price history, and image caches</strong> are stored locally in CryptoBeam's app-owned storage on each device. The macOS app can also create one app-owned local wallet backup in Application Support.</li>
-          <li>All network requests to exchanges and data providers are made over encrypted connections (HTTPS/TLS).</li>
+          <li><strong>Settings, accepted portfolio presentation, price history, staking reward history, and image caches</strong> are stored locally in CryptoBeam's app-owned storage on each device. The macOS app can also create one app-owned local wallet backup in Application Support.</li>
+          <li>All network requests to exchanges, data providers, and image hosts are made over encrypted connections (HTTPS/TLS).</li>
         </ul>
         <p>The primary safeguards for locally stored and synchronized data are the security of your device and Apple Account. Provider request data is also subject to each configured provider's security and privacy practices. We recommend keeping your devices and operating systems up to date.</p>
       </section>
@@ -94,8 +95,8 @@
         <ul>
           <li><strong>Remove a wallet</strong> at any time using the delete control in Settings.</li>
           <li><strong>Clear an API key</strong> at any time using the Clear control in Settings, which removes it from the Keychain.</li>
-          <li><strong>Reset This Device</strong> removes CryptoBeam settings, accepted portfolio presentation, downloaded logo cache, and local-only credentials from that installation. It leaves synchronized credentials and public wallet configuration intact. It also preserves local price history and the macOS app-owned wallet backup so they remain available after an ordinary reset.</li>
-          <li><strong>Erase Synced &amp; Local Data</strong> removes the initiating installation's CryptoBeam settings, accepted portfolio presentation, price history, image/logo cache, app-owned wallet backup, and all local Keychain credentials. It also asks Apple's synchronization services to remove CryptoBeam public wallet records and synchronizable credentials. Another device may retain its own local settings and caches until CryptoBeam is reset or uninstalled there, and an offline device may not observe synchronized deletion until it reconnects.</li>
+          <li><strong>Reset This Device</strong> removes CryptoBeam settings, accepted portfolio presentation, staking reward history, downloaded logo cache, and local-only credentials from that installation. It leaves synchronized credentials and public wallet configuration intact. It also preserves local price history and the macOS app-owned wallet backup so they remain available after an ordinary reset.</li>
+          <li><strong>Erase Synced &amp; Local Data</strong> removes the initiating installation's CryptoBeam settings, accepted portfolio presentation, price history, staking reward history, image/logo cache, app-owned wallet backup, and all local Keychain credentials. It also asks Apple's synchronization services to remove CryptoBeam public wallet records and synchronizable credentials. Another device may retain its own local settings and caches until CryptoBeam is reset or uninstalled there, and an offline device may not observe synchronized deletion until it reconnects.</li>
           <li><strong>Uninstalling CryptoBeam</strong> is controlled by the operating system. It removes or makes unavailable the app installation and its container, but it does not guarantee deletion of Keychain credentials, iCloud wallet configuration, synchronized credentials, or data local to another device. Use the in-app erase control before uninstalling when you want CryptoBeam to request deletion of the synchronized records it controls.</li>
         </ul>
         <p>Files you explicitly export through a system Save panel, such as CSV files, are user-owned files outside CryptoBeam's app-owned storage. Reset, erase, and uninstall do not search for or delete those exports.</p>
