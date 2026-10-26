@@ -86,7 +86,7 @@ Evidence/Source.
 ## D-CDW-005 — Production cutover is on hold
 
 - Date: 2026-10-18
-- Status: Active
+- Status: Superseded by D-CDW-009
 - Decision: no production cutover and no production DNS or traffic change
   until the owner lifts the hold in a later gate.
 - Rationale: the out-of-process work had to be reconciled and governance put
@@ -98,7 +98,7 @@ Evidence/Source.
 ## D-CDW-006 — Workers Builds is contained; push-gate rule
 
 - Date: 2026-10-18
-- Status: Active
+- Status: Superseded by D-CDW-010
 - Decision: Workers Builds keeps preview builds off, and its production watch
   paths exclude every file, so a push to this repository starts no build.
   Until Builds is set up again in a later gate, every push gate states that
@@ -143,3 +143,53 @@ Evidence/Source.
   `2026-10-18_13-28-34-Website-Project-Memory-Adoption-Discovery.txt`
   (SHA-256 `0637ebacbf2795da8c5541c1174f43ad224a5e1a085f295fe628d179f3bfa653`);
   approved in gate R5 on 2026-10-18.
+
+## D-CDW-009 — Production runs on the Worker through a zone route
+
+- Date: 2026-10-26
+- Status: Active
+- Decision: the cutover hold is lifted. caffeinateddad.dev is served by the
+  Worker through the zone route `caffeinateddad.dev/*`, not a Workers Custom
+  Domain. The four apex A records and the `www` CNAME are proxied and keep
+  their GitHub Pages targets. A zone redirect rule sends
+  `www.caffeinateddad.dev` to the apex with 301, keeping path and query. The
+  zone uses Always Use HTTPS, minimum TLS 1.2, Email Address Obfuscation off
+  and SSL Full. GitHub Pages stays enabled as the rollback (D-CDW-001).
+  Accepted differences from GitHub Pages: directory redirects are 307 and
+  relative, `/index.html` paths redirect to their directory, pages revalidate
+  on every request instead of being cached for 10 minutes, unknown paths get
+  a 404 with an empty body, and content types carry no charset (the pages
+  declare UTF-8). HSTS is off, as it was on GitHub Pages; browsers already
+  force HTTPS for `.dev` domains. GitHub Pages may warn that its DNS check
+  fails; that is expected while it is the rollback.
+- Rationale: no DNS record's content changes, so the mail records are never
+  involved, and rollback is deleting the route, which works while SSL stays
+  Full, or switching the five records back to DNS-only, which works only
+  until GitHub's certificate for the site expires on 2026-12-01. With Email
+  Address Obfuscation off, the pages served equal the repository's bytes.
+- Supersedes: D-CDW-005
+- Evidence/Source: the owner's approval of the cutover plan and R13 on
+  2026-10-25 and of R14 on 2026-10-26; R13 report
+  `2026-10-25_19-00-25-Website-Cutover-Prepare.txt`
+  (SHA-256 `2e6b0871fc4e5602ef229552d3417b9e64fa7b76fd23f9c96735fbe3e4a3b52b`);
+  R14 report `2026-10-26_12-00-11-Website-Cutover-Switch.txt`
+  (SHA-256 `a3a3ad8a91ff2ec12262713a2fbc7d1e980490e213097d9a246471cf72e384d5`);
+  approved as this record in gate R15.
+
+## D-CDW-010 — Every push to `main` deploys the Worker
+
+- Date: 2026-10-25
+- Status: Active
+- Decision: Workers Builds' production watch paths exclude nothing and
+  preview builds stay off, so every push to `main` builds and deploys the
+  Worker that serves production. The push-gate rule of D-CDW-006 ends. Every
+  push gate instead checks the build and deployment the push starts and the
+  live files afterwards.
+- Rationale: the Worker is the production host, so `main` must deploy to it
+  as it did to GitHub Pages.
+- Supersedes: D-CDW-006
+- Evidence/Source: R13 report
+  `2026-10-25_19-00-25-Website-Cutover-Prepare.txt`
+  (SHA-256 `2e6b0871fc4e5602ef229552d3417b9e64fa7b76fd23f9c96735fbe3e4a3b52b`),
+  step B2; R13 approved by the owner on 2026-10-25 and closed on 2026-10-26;
+  the push-gate checks approved as this record in gate R15.
