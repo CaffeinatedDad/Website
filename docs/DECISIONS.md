@@ -22,7 +22,7 @@ Evidence/Source.
 ## D-CDW-001 — Move hosting to a Cloudflare Worker; keep GitHub Pages as the rollback
 
 - Date: 2026-10-17
-- Status: Active
+- Status: Superseded by D-CDW-011
 - Decision: caffeinateddad.dev moves from GitHub Pages to a Cloudflare Worker
   that serves this repository's files as static assets, with no Worker script
   and with `workers.dev` and preview URLs off. GitHub Pages stays enabled until
@@ -129,7 +129,7 @@ Evidence/Source.
 ## D-CDW-008 — Adopt Project Memory and keep it off the site
 
 - Date: 2026-10-18
-- Status: Active
+- Status: Superseded by D-CDW-012
 - Decision: this repository adopts Project Memory Contract v1 with
   `PROJECT.md`, this log and a root `CLAUDE.md` thin adapter. Because the
   repository root is the publication root of both hosts, `.assetsignore`
@@ -147,7 +147,7 @@ Evidence/Source.
 ## D-CDW-009 — Production runs on the Worker through a zone route
 
 - Date: 2026-10-26
-- Status: Active
+- Status: Superseded by D-CDW-011
 - Decision: the cutover hold is lifted. caffeinateddad.dev is served by the
   Worker through the zone route `caffeinateddad.dev/*`, not a Workers Custom
   Domain. The four apex A records and the `www` CNAME are proxied and keep
@@ -193,3 +193,70 @@ Evidence/Source.
   (SHA-256 `2e6b0871fc4e5602ef229552d3417b9e64fa7b76fd23f9c96735fbe3e4a3b52b`),
   step B2; R13 approved by the owner on 2026-10-25 and closed on 2026-10-26;
   the push-gate checks approved as this record in gate R15.
+
+## D-CDW-011 — The Worker is the only host; GitHub Pages and staging are retired
+
+- Date: 2026-10-26
+- Status: Active
+- Decision: GitHub Pages is turned off, and the staging hostname (its DNS
+  record and Worker route) is removed. caffeinateddad.dev is served only by
+  the Cloudflare Worker `caffeinateddad-website`, which serves this
+  repository's files as static assets, with no Worker script and with
+  `workers.dev` and preview URLs off, through the zone route
+  `caffeinateddad.dev/*`, not a Workers Custom Domain. The apex has one
+  proxied A record on the documentation placeholder `192.0.2.0`, and `www` is
+  a proxied CNAME to the apex, so neither points at GitHub. A zone redirect
+  rule sends `www.caffeinateddad.dev` to the apex with 301, keeping path and
+  query. The zone uses Always Use HTTPS, minimum TLS 1.2, Email Address
+  Obfuscation off and SSL Full; Cloudflare's automatic SSL/TLS may change the
+  SSL mode, which the site doesn't depend on because no request reaches an
+  origin. HSTS stays off: browsers already force HTTPS for `.dev` domains.
+  The rollback for a bad deploy is the previous Worker version. There is no
+  fallback host: deleting the route or setting the site records DNS-only
+  takes the site down. Turning GitHub Pages back on needs its own decision.
+  Differences from GitHub Pages accepted at the cutover still hold: directory
+  redirects are 307 and relative, `/index.html` paths redirect to their
+  directory, pages revalidate on every request, unknown paths get a 404 with
+  an empty body, and content types carry no charset (the pages declare
+  UTF-8).
+- Rationale: GitHub Pages was kept only as the rollback, and that rollback
+  was about to stop working. Cloudflare's automatic SSL/TLS scan on
+  2026-11-21 could raise SSL to Full (strict), which would break deleting the
+  route once GitHub's certificate for the site lapsed. That certificate was
+  due to expire on 2026-12-01 and could not renew while the records were
+  proxied, which would break switching them back. A previous Worker version
+  restores exactly the old files at once. Retiring GitHub Pages also ends a
+  second build on every push and DNS records pointing at GitHub. The staging
+  hostname, first made for the Phase 3 rehearsal, had no use left once R14
+  moved production to the Worker. With Email Address Obfuscation off, the
+  pages served equal the repository's bytes.
+- Supersedes: D-CDW-001, D-CDW-009
+- Evidence/Source: R17, decided by the owner on 2026-10-26 ("Retire from
+  Nov 2"); R14 report `2026-10-26_12-00-11-Website-Cutover-Switch.txt`
+  (SHA-256 `a3a3ad8a91ff2ec12262713a2fbc7d1e980490e213097d9a246471cf72e384d5`)
+  for the route, redirect rule and zone settings; R18 report
+  `2026-11-01_22-56-09_Website_Retire-GitHub-Pages-Review_v01.txt`
+  (SHA-256 `04af0a069eeefb74a88dcc7ae4c7cdd923c3748963f23654a426afa012689aa3`),
+  run on 2026-11-02; approved as this record in gate R19.
+
+## D-CDW-012 — Project Memory stays in the repository and off the site
+
+- Date: 2026-10-26
+- Status: Active
+- Decision: this repository keeps Project Memory Contract v1 with
+  `PROJECT.md`, this log and a root `CLAUDE.md` thin adapter, as adopted on
+  2026-10-18. The repository root is the Worker's publication root, so
+  `.assetsignore` lists these files and every other file that is not site
+  content. `CNAME` and `_config.yml`, which only GitHub Pages used, are
+  removed; `.assetsignore` still lists both, so neither is served if it
+  comes back.
+- Rationale: a fresh session needs the workflow and current state in the
+  repository, and memory files are not site content. With GitHub Pages off
+  (D-CDW-011), the Jekyll exclude list and the custom-domain file have no
+  reader.
+- Supersedes: D-CDW-008
+- Evidence/Source: R4 report
+  `2026-10-18_13-28-34-Website-Project-Memory-Adoption-Discovery.txt`
+  (SHA-256 `0637ebacbf2795da8c5541c1174f43ad224a5e1a085f295fe628d179f3bfa653`)
+  for the adoption; R17, decided by the owner on 2026-10-26, for removing
+  both files; approved as this record in gate R19.
