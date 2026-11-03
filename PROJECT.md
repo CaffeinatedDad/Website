@@ -2,8 +2,8 @@
 
 ```text
 Memory-Contract-Version: 1
-Memory-Revision: 3
-Base-Revision: 2
+Memory-Revision: 4
+Base-Revision: 3
 Project: Caffeinated Dad Website
 Repository: https://github.com/CaffeinatedDad/Website
 Branch: main
@@ -22,10 +22,11 @@ This repository is the source of caffeinateddad.dev: the Caffeinated Dad home pa
 - The Cloudflare Worker is the only host. It serves production through a route, and `www` redirects to the apex with 301 (D-CDW-011).
 - Every push to `main` builds and deploys the Worker, so it changes the live site (D-CDW-010).
 - GitHub Pages is off and the staging hostname is gone, both since 2026-11-02. The rollback for a bad deploy is the previous Worker version (D-CDW-011).
+- Since 2026-11-03 the site carries the CryptoBeam 1.3 look: the home and CryptoBeam pages restyled, ten 1.3 screenshots, social preview tags, and no version number on the product page. The Worker serves 24 files.
 
 ## Architecture summary
 
-- **Site:** static files at the repository root: `index.html`, `assets/` and `cryptobeam/`. No framework, package manager or build step.
+- **Site:** static files at the repository root: `index.html`, `assets/` and `cryptobeam/`. No framework, package manager or build step. 24 served files: `index.html`, `assets/site.css`, `assets/cryptobeam-icon.png`, 17 files under `assets/launch/`, and the CryptoBeam page, stylesheet, support page and privacy page.
 - **Cloudflare Worker `caffeinateddad-website`:** static assets from the repository root, no Worker script, `workers.dev` and preview URLs off ([wrangler.jsonc](wrangler.jsonc)). [.assetsignore](.assetsignore) lists every file it must not serve. Workers Builds deploys it from `main`.
 - **Zone (Cloudflare):** the route `caffeinateddad.dev/*`; one proxied apex A record on the placeholder `192.0.2.0` and a proxied `www` CNAME to the apex, so no request reaches an origin; a redirect rule for `www`. Always Use HTTPS, minimum TLS 1.2, Email Obfuscation off, HSTS off, SSL Full (automatic SSL/TLS may change the mode; the site doesn't depend on it). The zone holds the iCloud Mail records.
 - **Decisions:** [docs/DECISIONS.md](docs/DECISIONS.md).
@@ -56,7 +57,7 @@ Keep the site online and correct on the Worker. The move to Cloudflare is comple
 
 ## Last closed gate
 
-R18, retire GitHub Pages and the staging hostname, closed 2026-11-02. It deleted the staging route and record, moved the apex and `www` records off GitHub's addresses and turned GitHub Pages off; every critical and final check passed and no rollback ran. Evidence: report `2026-11-01_22-56-09_Website_Retire-GitHub-Pages-Review_v01.txt`, SHA-256 `04af0a069eeefb74a88dcc7ae4c7cdd923c3748963f23654a426afa012689aa3`.
+R24, publish the CryptoBeam 1.3 website refresh, closed 2026-11-03. It pushed R23's commit, opened and squash-merged PR #8 as one commit on `main`, and checked the Worker build and deployment it started; all 24 served files matched the reviewed tree byte for byte, the five retired screenshot paths and every excluded path returned 404, and no rollback ran. Evidence: report `2026-11-03_08-57-20_Website_R24-Website-Refresh-Report_v01.txt`, SHA-256 `d5f7f3e41b3f34c3ca4973cd0fd9e7b3d54816e66de120a22eae19d8cb32702c`; R23's report `2026-11-03_08-14-29_Website_R23-Website-Refresh-Report_v01.txt`, SHA-256 `eb7bcc0f6bd51d34f4cb5010149370ac11bc310c21ed690b4287e73acb9ffda0`.
 
 ## Next gate
 
@@ -64,8 +65,8 @@ None is pending. The items under open work are candidates; each is a recommendat
 
 ## Open work and deferred items
 
-- The CryptoBeam product page still says "CryptoBeam v1.0 · Available now". Changing it is protected content (D-CDW-004).
-- Clean-up, each optional and its own gate: merged branches on GitHub, the owner's local checkout, and the stale Claude Code memory notes for it.
+- Clean-up, each optional and its own gate: merged branches on GitHub (now including `website-refresh-v1.3`), the owner's local checkout, and the stale Claude Code memory notes for it.
+- Content updates when CryptoBeam changes: screenshots, copy and the privacy policy, each its own gate under D-CDW-004.
 - Not planned: a Workers Custom Domain instead of the route. It would change DNS again for no visible gain.
 
 ## Open questions
@@ -80,13 +81,14 @@ None blocks the next gate. Unresolved:
 - `main` is canonical and is production's source: a push to `main` deploys the live site. Commit and push are separate gates.
 - The route, the `www` redirect rule, the two site records and the zone settings carry production, and there is no fallback host: deleting the route or setting the records DNS-only takes the site down. Change them only in their own gate.
 - Turning GitHub Pages back on, or adding a staging hostname, needs its own decision and gate.
-- `cryptobeam/` pages and stylesheet: protected; no change without its own approval (D-CDW-004).
+- `cryptobeam/` pages and stylesheet: protected; no change without its own approval (D-CDW-004). The refresh of 2026-11-03 was approved as-is by the owner and kept the support and privacy page text byte-identical.
 - The iCloud Mail DNS records (MX, SPF, verification): never touched.
 - Other projects' repositories, zones and Cloudflare resources: out of scope.
 - **Other repositories:** this memory grants no authority over another repository.
 
 ## Recent meaningful changes
 
+- 2026-11-03: R23 and R24 refreshed the home and CryptoBeam pages for CryptoBeam 1.3 (PR #8): new look, ten 1.3 screenshots, Open Graph and Twitter tags with a social preview image; served files went from 18 to 24. R22 published Memory Revision 3 (PR #7).
 - 2026-11-02: R18 turned GitHub Pages off and removed the staging hostname; the site's records no longer point at GitHub (D-CDW-011).
 - 2026-10-29: R20 and R21 updated `/cryptobeam/privacy/` to CryptoBeam's October 28, 2026 policy (PR #6).
 - 2026-10-26: R17 decided to retire GitHub Pages; R15 and R16 published Memory Revision 2 (PR #5), the first automatic deploy.
